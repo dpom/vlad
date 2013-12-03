@@ -79,3 +79,47 @@
   (just [(contains {:type :vlad.validations/matches
                               :selector [:name]})]))
 
+(tabular
+(fact (validate ?validator {:num1 7 :num2 nil :num3 "abc" :num4 9}) => ?errors)
+?validator                         ?errors
+
+(number [:num1])                    []
+
+(number [:num2])                    [{:selector [:num2], :type :vlad.validations/number}]
+
+(number [:num3])                    [{:selector [:num3], :type :vlad.validations/number}]
+
+(less-value 3 [:num1])              [{:selector [:num1], :type :vlad.validations/less-value, :vmax 3}]
+
+(less-value 10 [:num1])             []
+
+(greater-value 3 [:num1])           []
+
+(greater-value 10 [:num1])          [{:selector [:num1], :type :vlad.validations/greater-value, :vmin 10}]
+
+(greater-field [:num1] [:num4])     [{:first-selector [:num1], :second-selector [:num4], :type :vlad.validations/greater-field}]
+
+(greater-field [:num4] [:num1])     []
+
+(between-value 3 10 [:num1])        []
+
+(between-value 8 10 [:num1])        [{:selector [:num1], :type :vlad.validations/greater-value, :vmin 8}]
+
+(between-value 3 5 [:num1])         [{:selector [:num1], :type :vlad.validations/less-value, :vmax 5}]
+
+(nil-value [:num1])                 [{:selector [:num1], :type :vlad.validations/nil-value}]
+
+(nil-value [:num2])                 []
+
+(nil-value [:num3])                 [{:selector [:num3], :type :vlad.validations/nil-value}]
+
+(num-between 0 10 [:num2])          [{:selector [:num2], :type :vlad.validations/number}]
+
+(num-between 0 10 [:num3])          [{:selector [:num3], :type :vlad.validations/number}]
+
+(equal-or-greater-value 5 [:num1])  []
+
+(equal-or-greater-value 7 [:num1])  []
+
+(equal-or-greater-value 9 [:num1])  [{:selector [:num1], :type :vlad.validations/greater-value, :vmin 9}])
+

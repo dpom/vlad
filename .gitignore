@@ -13,3 +13,6 @@ pom.xml
 /doc
 *.un~
 /.lein-repl-history
+/.nrepl-port
+/.build.el
+/Vlad.org

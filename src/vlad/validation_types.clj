@@ -80,3 +80,21 @@
   (validate [self data]
     (self data)))
 
+;; `Alternate` is an `or` operator for composing validations. The composed validation fails only if all component validations fail. 
+(defrecord Alternate [left right]
+  Validation
+  (validate [{:keys [left right]} data]
+    (let [left-errors (validate left data)]
+      (if (empty? left-errors) left-errors (validate right data)))))
+
+(defn alternate
+  "Example:
+
+    (alternate
+      (val-nil :opt-field)
+      (number :opt-field))"
+  ([] valid)
+  ([left] left)
+  ([left right] (Alternate. left right))
+  ([left right & validations] (reduce #(Alternate. %1 %2) (Alternate. left right) validations)) )
+

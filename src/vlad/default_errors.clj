@@ -65,3 +65,24 @@
               (assoc output-map selector new-errors)))
           {} errors))
 
+(defmethod english-translation :vlad.validations/number
+  [{:keys [name]}]
+  (format "%s must be a number." name))
+
+
+(defmethod english-translation :vlad.validations/nil-value
+  [{:keys [name]}]
+  (format "%s must be nil." name))
+
+(defmethod english-translation :vlad.validations/greater-value
+  [{:keys [name vmin]}]
+  (format "%s must be greater than %d." name vmin))
+
+(defmethod english-translation :vlad.validations/less-value
+  [{:keys [name vmax]}]
+  (format "%s must be less than %d." name vmax))
+
+(defmethod english-translation :vlad.validations/greater-field
+  [{:keys [first-name second-name]}]
+  (format "%s must be greater than %s." first-name second-name))
+
