@@ -33,5 +33,8 @@
 
 (fact (assign-name (vt/validate (v/present [:foo]) {})
              {[:foo] "Foozle"})
-      => [{:name "Foozle" :type :vlad.validations/present :selector [:foo]}])
+      => [{:first-name nil, :name "Foozle", :second-name nil, :selector [:foo], :type :vlad.validations/present}])
 
+(fact "about assign-name with 2 selectors"
+  (assign-name (vt/validate (v/greater-field [:num1] [:num2]) {:num1 3 :num2 9}) {[:num1] "Num1" [:num2] "Num2"})
+  => [{:first-name "Num1", :first-selector [:num1], :name nil, :second-name "Num2", :second-selector [:num2], :type :vlad.validations/greater-field}])

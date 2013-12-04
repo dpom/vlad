@@ -8,7 +8,7 @@
   takes a collection of errors and a map of selectors to names and will return
   the errors with names inserted."
   [errors selectors-to-names]
-  (map #(assoc % :name (selectors-to-names (:selector %))) errors))
+  (map #(into % {:name (selectors-to-names (:selector %)) :first-name (selectors-to-names (:first-selector %)) :second-name (selectors-to-names (:second-selector %))}) errors))
 
 (defmulti english-translation
   "Takes an error and returns a human readable version of it."
